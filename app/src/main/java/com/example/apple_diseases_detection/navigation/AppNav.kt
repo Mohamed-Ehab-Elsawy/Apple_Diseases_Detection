@@ -1,0 +1,43 @@
+package com.example.apple_diseases_detection.navigation
+
+import androidx.compose.runtime.Composable
+import androidx.navigation.NavHostController
+import androidx.navigation.compose.NavHost
+import androidx.navigation.compose.composable
+import com.example.apple_diseases_detection.navigation.MainScreens.Camera
+import com.example.apple_diseases_detection.navigation.MainScreens.Detection
+import com.example.apple_diseases_detection.navigation.MainScreens.Home
+import com.example.apple_diseases_detection.navigation.MainScreens.Login
+import com.example.apple_diseases_detection.navigation.MainScreens.Register
+import com.example.apple_diseases_detection.navigation.MainScreens.Results
+import com.example.apple_diseases_detection.navigation.MainScreens.Splash
+import com.example.apple_diseases_detection.presentation.screens.auth.login.LoginScreen
+import com.example.apple_diseases_detection.presentation.screens.auth.register.RegisterScreen
+import com.example.apple_diseases_detection.presentation.screens.camera.CameraScreen
+import com.example.apple_diseases_detection.presentation.screens.detection.DetectionScreen
+import com.example.apple_diseases_detection.presentation.screens.home.HomeScreen
+import com.example.apple_diseases_detection.presentation.screens.result.ResultsScreen
+import com.example.apple_diseases_detection.presentation.screens.splash.SplashScreen
+
+sealed class MainScreens(val route: String) {
+    object Splash : MainScreens("splash_screen")
+    object Login : MainScreens("login_screen")
+    object Register : MainScreens("register_screen")
+    object Home : MainScreens("home_screen")
+    object Camera : MainScreens("camera_screen")
+    object Detection : MainScreens("detection_screen")
+    object Results : MainScreens("result_screen")
+}
+
+@Composable
+fun AppNavGraph(navController: NavHostController) {
+    NavHost(navController = navController, startDestination = Splash.route) {
+        composable(Splash.route) { SplashScreen(navController) }
+        composable(Login.route) { LoginScreen(navController) }
+        composable(Register.route) { RegisterScreen(navController) }
+        composable(Home.route) { HomeScreen(navController) }
+        composable(Camera.route) {CameraScreen(navController)}
+        composable(Detection.route) { DetectionScreen(navController) }
+        composable(Results.route) { ResultsScreen(navController) }
+    }
+}
