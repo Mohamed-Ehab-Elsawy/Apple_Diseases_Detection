@@ -5,4 +5,7 @@
     <string name="detection">Detection</string>
     <string name="home">Home</string>
     <string name="results">Results</string>
+    <string name="loading">Loading …</string>
+    <string name="e_mail">E-mail</string>
+    <string name="password">Password</string>
 </resources>

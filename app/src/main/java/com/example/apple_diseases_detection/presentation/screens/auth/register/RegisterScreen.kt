@@ -12,25 +12,23 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.res.stringResource
 import androidx.navigation.NavController
 import com.example.apple_diseases_detection.R
 import com.example.apple_diseases_detection.presentation.components.ui.AppTopBar
-import com.example.apple_diseases_detection.presentation.components.ui.theme.errorContainerLight
-import com.example.apple_diseases_detection.presentation.components.ui.theme.onErrorContainerLight
-import com.example.apple_diseases_detection.presentation.components.ui.theme.white
+import com.example.apple_diseases_detection.presentation.components.ui.theme.errorContainer
+import com.example.apple_diseases_detection.presentation.components.ui.theme.onErrorContainer
 
 @Composable
 fun RegisterScreen(navController: NavController) {
     val context = LocalContext.current
-    val activity = context as? Activity
+    context as? Activity
 
     val snackBarHostState = remember { SnackbarHostState() }
-    val coroutineScope = rememberCoroutineScope()
-    val keyboardController = LocalSoftwareKeyboardController.current
+    rememberCoroutineScope()
+    LocalSoftwareKeyboardController.current
 
     Scaffold(
         topBar = {
@@ -42,8 +40,8 @@ fun RegisterScreen(navController: NavController) {
             SnackbarHost(hostState = snackBarHostState) { data ->
                 Snackbar(
                     snackbarData = data,
-                    containerColor = errorContainerLight,
-                    contentColor = onErrorContainerLight
+                    containerColor = errorContainer,
+                    contentColor = onErrorContainer
                 )
             }
         }

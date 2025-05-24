@@ -18,17 +18,17 @@ import androidx.compose.ui.res.stringResource
 import androidx.navigation.NavController
 import com.example.apple_diseases_detection.R
 import com.example.apple_diseases_detection.presentation.components.ui.AppTopBar
-import com.example.apple_diseases_detection.presentation.components.ui.theme.errorContainerLight
-import com.example.apple_diseases_detection.presentation.components.ui.theme.onErrorContainerLight
+import com.example.apple_diseases_detection.presentation.components.ui.theme.errorContainer
+import com.example.apple_diseases_detection.presentation.components.ui.theme.onErrorContainer
 
 @Composable
 fun LoginScreen(navController: NavController) {
     val context = LocalContext.current
-    val activity = context as? Activity
+    context as? Activity
 
     val snackBarHostState = remember { SnackbarHostState() }
-    val coroutineScope = rememberCoroutineScope()
-    val keyboardController = LocalSoftwareKeyboardController.current
+    rememberCoroutineScope()
+    LocalSoftwareKeyboardController.current
 
     Scaffold(
         topBar = {
@@ -40,8 +40,8 @@ fun LoginScreen(navController: NavController) {
             SnackbarHost(hostState = snackBarHostState) { data ->
                 Snackbar(
                     snackbarData = data,
-                    containerColor = errorContainerLight,
-                    contentColor = onErrorContainerLight
+                    containerColor = errorContainer,
+                    contentColor = onErrorContainer
                 )
             }
         }

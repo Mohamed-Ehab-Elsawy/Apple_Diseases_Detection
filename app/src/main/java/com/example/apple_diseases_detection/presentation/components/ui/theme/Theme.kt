@@ -9,42 +9,42 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.platform.LocalContext
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
 
-private val lightScheme = lightColorScheme(
-    primary = primaryLight,
-    onPrimary = onPrimaryLight,
-    primaryContainer = primaryContainerLight,
-    onPrimaryContainer = onPrimaryContainerLight,
-    secondary = secondaryLight,
-    onSecondary = onSecondaryLight,
-    secondaryContainer = secondaryContainerLight,
-    onSecondaryContainer = onSecondaryContainerLight,
-    tertiary = tertiaryLight,
-    onTertiary = onTertiaryLight,
-    tertiaryContainer = tertiaryContainerLight,
-    onTertiaryContainer = onTertiaryContainerLight,
-    error = errorLight,
-    onError = onErrorLight,
-    errorContainer = errorContainerLight,
-    onErrorContainer = onErrorContainerLight,
-    background = backgroundLight,
-    onBackground = onBackgroundLight,
-    surface = surfaceLight,
-    onSurface = onSurfaceLight,
-    surfaceVariant = surfaceVariantLight,
-    onSurfaceVariant = onSurfaceVariantLight,
-    outline = outlineLight,
-    outlineVariant = outlineVariantLight,
-    scrim = scrimLight,
-    inverseSurface = inverseSurfaceLight,
-    inverseOnSurface = inverseOnSurfaceLight,
-    inversePrimary = inversePrimaryLight,
-    surfaceDim = surfaceDimLight,
-    surfaceBright = surfaceBrightLight,
-    surfaceContainerLowest = surfaceContainerLowestLight,
-    surfaceContainerLow = surfaceContainerLowLight,
-    surfaceContainer = surfaceContainerLight,
-    surfaceContainerHigh = surfaceContainerHighLight,
-    surfaceContainerHighest = surfaceContainerHighestLight,
+private val appScheme = lightColorScheme(
+    primary = primary,
+    onPrimary = onPrimary,
+    primaryContainer = primaryContainer,
+    onPrimaryContainer = onPrimaryContainer,
+    secondary = secondary,
+    onSecondary = onSecondary,
+    secondaryContainer = secondaryContainer,
+    onSecondaryContainer = onSecondaryContainer,
+    tertiary = tertiary,
+    onTertiary = onTertiary,
+    tertiaryContainer = tertiaryContainer,
+    onTertiaryContainer = onTertiaryContainer,
+    error = error,
+    onError = onError,
+    errorContainer = errorContainer,
+    onErrorContainer = onErrorContainer,
+    background = background,
+    onBackground = onBackground,
+    surface = surface,
+    onSurface = onSurface,
+    surfaceVariant = surfaceVariant,
+    onSurfaceVariant = onSurfaceVariant,
+    outline = outline,
+    outlineVariant = outlineVariant,
+    scrim = scrim,
+    inverseSurface = inverseSurface,
+    inverseOnSurface = inverseOnSurface,
+    inversePrimary = inversePrimary,
+    surfaceDim = surfaceDim,
+    surfaceBright = surfaceBright,
+    surfaceContainerLowest = surfaceContainerLowest,
+    surfaceContainerLow = surfaceContainerLow,
+    surfaceContainer = surfaceContainer,
+    surfaceContainerHigh = surfaceContainerHigh,
+    surfaceContainerHighest = surfaceContainerHighest,
 )
 
 @Composable
@@ -55,11 +55,11 @@ fun AppleDiseasesDetectionTheme(
     val context = LocalContext.current
     val colorScheme = if (dynamicColor && Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
         dynamicLightColorScheme(context)
-    } else lightScheme
+    } else appScheme
 
     val systemUiController = rememberSystemUiController()
     LaunchedEffect(colorScheme) {
-        systemUiController.setSystemBarsColor(color = primaryLight)
+        systemUiController.setSystemBarsColor(color = primary)
     }
 
     MaterialTheme(
