@@ -31,7 +31,8 @@ import com.example.apple_diseases_detection.presentation.components.ui.theme.err
 fun PasswordTextField(
     modifier: Modifier = Modifier, value: String,
     onValueChange: (String) -> Unit,
-    label: String = stringResource(R.string.password), errorMessage: String? = null
+    label: String = stringResource(R.string.password),
+    errorMessage: String? = null
 ) {
     var isPasswordVisible by remember { mutableStateOf(false) }
 

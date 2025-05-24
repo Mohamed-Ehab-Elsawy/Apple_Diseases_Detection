@@ -19,8 +19,10 @@ import com.example.apple_diseases_detection.presentation.components.ui.theme.err
 
 @Composable
 fun EmailTextField(
-    modifier: Modifier = Modifier, value: String,
-    onValueChange: (String) -> Unit, errorMessage: String? = null
+    modifier: Modifier = Modifier,
+    value: String,
+    onValueChange: (String) -> Unit,
+    errorMessage: String? = null
 ) {
     OutlinedTextField(
         modifier = modifier

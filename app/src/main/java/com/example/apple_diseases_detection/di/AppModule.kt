@@ -6,7 +6,13 @@ import androidx.appcompat.app.AppCompatDelegate
 import androidx.security.crypto.EncryptedSharedPreferences
 import androidx.security.crypto.MasterKey
 import com.example.apple_diseases_detection.data.local.PreferencesHelper
+import com.example.apple_diseases_detection.data.remote.repository.AuthRepository
+import com.example.apple_diseases_detection.presentation.screens.auth.login.LoginViewModel
+import com.example.apple_diseases_detection.presentation.screens.auth.register.SignupViewModel
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.firestore.FirebaseFirestore
 import org.koin.android.ext.koin.androidContext
+import org.koin.core.module.dsl.viewModel
 import org.koin.dsl.module
 
 val appModule = module {
@@ -27,5 +33,12 @@ val appModule = module {
             EncryptedSharedPreferences.PrefValueEncryptionScheme.AES256_GCM
         )
     }
+
     single { PreferencesHelper(get()) }
+    single { FirebaseAuth.getInstance() }
+    single { FirebaseFirestore.getInstance() }
+    single { AuthRepository(get(), get(), get()) }
+
+    viewModel { LoginViewModel(get()) }
+    viewModel { SignupViewModel(get()) }
 }

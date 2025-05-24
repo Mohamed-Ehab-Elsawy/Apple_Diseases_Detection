@@ -30,15 +30,15 @@ class PreferencesHelper(private val sharedPreferences: SharedPreferences) {
     fun putUser(user: User) {
         val patientDataJson = gson.toJson(user)
         putString(USER, patientDataJson)
-        Log.e(TAG, "Patient saved, id: ${user.id}, name: ${user.name}")
+        Log.e(TAG, "Patient saved, id: ${user.id}, name: ${user.firstName} ${user.lastName}")
     }
 
     fun fetchUser(): User {
         val json = fetchString(USER)
         return if (json.isNotEmpty()) {
-            val patient = gson.fromJson(json, User::class.java)
-            Log.e(TAG, "Patient fetched, id:${patient.id}, name: ${patient.name}")
-            patient
+            val user = gson.fromJson(json, User::class.java)
+            Log.e(TAG, "Patient fetched, id: ${user.id}, name: ${user.firstName} ${user.lastName}")
+            user
         } else User()
     }
 
