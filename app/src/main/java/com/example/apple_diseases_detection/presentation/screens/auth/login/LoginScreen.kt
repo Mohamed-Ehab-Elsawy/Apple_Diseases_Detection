@@ -1,5 +1,6 @@
 package com.example.apple_diseases_detection.presentation.screens.auth.login
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -8,6 +9,9 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.systemBarsPadding
+import androidx.compose.material3.Icon
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Snackbar
 import androidx.compose.material3.SnackbarDuration
@@ -23,6 +27,7 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -36,7 +41,9 @@ import com.example.apple_diseases_detection.presentation.components.ui.PasswordT
 import com.example.apple_diseases_detection.presentation.components.ui.ProgressDialog
 import com.example.apple_diseases_detection.presentation.components.ui.theme.errorContainer
 import com.example.apple_diseases_detection.presentation.components.ui.theme.onErrorContainer
+import com.example.apple_diseases_detection.presentation.components.ui.theme.primary
 import com.example.apple_diseases_detection.presentation.components.ui.theme.secondary
+import com.example.apple_diseases_detection.presentation.components.ui.theme.white
 import com.example.apple_diseases_detection.utils.UiState
 import kotlinx.coroutines.launch
 import org.koin.androidx.compose.koinViewModel
@@ -49,33 +56,12 @@ fun LoginScreen(navController: NavController, vm: LoginViewModel = koinViewModel
     val coroutineScope = rememberCoroutineScope()
     val keyboardController = LocalSoftwareKeyboardController.current
 
-    when (uiState) {
-        is UiState.Idle -> {}
-        is UiState.Loading -> ProgressDialog()
-        is UiState.Success -> LaunchedEffect(Unit) { navController.navigate(MainScreens.Home.route) }
-
-        is UiState.Error -> {
-            LaunchedEffect(Unit) {
-                val message = (uiState as UiState.Error).t.localizedMessage
-
-                coroutineScope.launch {
-                    if (message != null) {
-                        snackBarHostState.showSnackbar(
-                            message,
-                            duration = SnackbarDuration.Short
-                        )
-                    }
-                }
-            }
-        }
-    }
-
     Scaffold(
         topBar = {
             AppTopBar(
                 title = stringResource(R.string.login)
             )
-        },
+        }, modifier = Modifier.systemBarsPadding(),
         snackbarHost = {
             SnackbarHost(hostState = snackBarHostState) { data ->
                 Snackbar(
@@ -85,18 +71,29 @@ fun LoginScreen(navController: NavController, vm: LoginViewModel = koinViewModel
                 )
             }
         }
-    ) { paddingValues ->
+    ) { innerPadding ->
         Box(
             modifier = Modifier
-                .padding(paddingValues)
+                .padding(innerPadding)
                 .fillMaxSize()
+                .background(white)
         ) {
             Column(
                 modifier = Modifier
                     .fillMaxSize()
                     .padding(horizontal = 20.dp),
-                verticalArrangement = Arrangement.Center
+                verticalArrangement = Arrangement.Top
             ) {
+                Spacer(modifier = Modifier.padding(top = 50.dp))
+                Icon(
+                    painter = painterResource(id = R.drawable.ic_logo), contentDescription = null,
+                    tint = primary,
+                    modifier = Modifier
+                        .size(150.dp)
+                        .fillMaxWidth()
+                        .align(Alignment.CenterHorizontally)
+                )
+                Spacer(modifier = Modifier.padding(top = 50.dp))
                 EmailTextField(
                     value = vm.email.value,
                     onValueChange = vm::onEmailChange,
@@ -143,6 +140,30 @@ fun LoginScreen(navController: NavController, vm: LoginViewModel = koinViewModel
                         .clickable { navController.navigate(MainScreens.Register.route) }
                         .align(Alignment.Start)
                 )
+            }
+        }
+        when (uiState) {
+            is UiState.Idle -> {}
+            is UiState.Loading -> ProgressDialog()
+            is UiState.Success -> LaunchedEffect(Unit) {
+                navController.navigate(MainScreens.Home.route) {
+                    popUpTo(MainScreens.Login.route) { inclusive = true }
+                }
+            }
+
+            is UiState.Error -> {
+                LaunchedEffect(Unit) {
+                    val message = (uiState as UiState.Error).t.localizedMessage
+
+                    coroutineScope.launch {
+                        if (message != null) {
+                            snackBarHostState.showSnackbar(
+                                message,
+                                duration = SnackbarDuration.Short
+                            )
+                        }
+                    }
+                }
             }
         }
     }

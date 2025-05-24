@@ -5,6 +5,7 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.Surface
@@ -18,7 +19,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.apple_diseases_detection.presentation.components.ui.theme.AppTypography
-import com.example.apple_diseases_detection.presentation.components.ui.theme.black
+import com.example.apple_diseases_detection.presentation.components.ui.theme.primary
 import com.example.apple_diseases_detection.presentation.components.ui.theme.transparent
 import com.example.apple_diseases_detection.presentation.components.ui.theme.white
 
@@ -30,22 +31,23 @@ fun AppTopBar(
     onIconClick: (() -> Unit)? = null
 ) {
     Surface(
-        modifier = Modifier.fillMaxWidth(),
+        modifier = Modifier
+            .statusBarsPadding()
+            .fillMaxWidth(),
         color = white
     ) {
         Box(
             modifier = Modifier
+                .padding(vertical = 36.dp)
                 .fillMaxWidth()
                 .background(transparent)
-                .padding(vertical = 18.dp)
         ) {
-
             Text(
                 text = title,
                 style = AppTypography.headlineLarge,
                 fontWeight = FontWeight.Bold,
                 fontSize = 32.sp,
-                color = black,
+                color = primary,
                 modifier = Modifier.align(Alignment.Center)
             )
             if (icon != null && iconTint != null && onIconClick != null)

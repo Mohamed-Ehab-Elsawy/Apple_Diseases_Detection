@@ -1,5 +1,6 @@
 package com.example.apple_diseases_detection.presentation.screens.auth.register
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
@@ -34,6 +35,7 @@ import com.example.apple_diseases_detection.presentation.components.ui.ProgressD
 import com.example.apple_diseases_detection.presentation.components.ui.theme.errorContainer
 import com.example.apple_diseases_detection.presentation.components.ui.theme.onErrorContainer
 import com.example.apple_diseases_detection.presentation.components.ui.theme.primary
+import com.example.apple_diseases_detection.presentation.components.ui.theme.white
 import com.example.apple_diseases_detection.presentation.screens.auth.register.component.NameTextField
 import com.example.apple_diseases_detection.presentation.screens.auth.register.component.PhoneTextField
 import com.example.apple_diseases_detection.utils.UiState
@@ -51,23 +53,6 @@ fun RegisterScreen(
 
     val keyboardController = LocalSoftwareKeyboardController.current
     val autoFillManager = LocalAutofillManager.current
-
-    when (uiState) {
-        is UiState.Idle -> {}
-        is UiState.Loading -> ProgressDialog()
-        is UiState.Success -> LaunchedEffect(Unit) { navController.navigate(MainScreens.Home.route) }
-
-        is UiState.Error -> {
-            LaunchedEffect(Unit) {
-                coroutineScope.launch {
-                    snackBarHostState.showSnackbar(
-                        (uiState as UiState.Error).t.localizedMessage ?: "Error",
-                        duration = SnackbarDuration.Short
-                    )
-                }
-            }
-        }
-    }
 
     Scaffold(
         topBar = {
@@ -92,6 +77,7 @@ fun RegisterScreen(
             modifier = Modifier
                 .padding(paddingValues)
                 .fillMaxSize()
+                .background(white)
         ) {
             LazyColumn(
                 modifier = Modifier
@@ -166,6 +152,25 @@ fun RegisterScreen(
                 }
             }
         }
-    }
+        when (uiState) {
+            is UiState.Idle -> {}
+            is UiState.Loading -> ProgressDialog()
+            is UiState.Success -> LaunchedEffect(Unit) {
+                navController.navigate(MainScreens.Home.route) {
+                    popUpTo(MainScreens.Login.route) { inclusive = true }
+                }
+            }
 
+            is UiState.Error -> {
+                LaunchedEffect(Unit) {
+                    coroutineScope.launch {
+                        snackBarHostState.showSnackbar(
+                            (uiState as UiState.Error).t.localizedMessage ?: "Error",
+                            duration = SnackbarDuration.Short
+                        )
+                    }
+                }
+            }
+        }
+    }
 }
