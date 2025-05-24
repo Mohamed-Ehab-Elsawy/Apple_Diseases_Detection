@@ -1,5 +1,6 @@
 package com.example.apple_diseases_detection.presentation.screens.auth.login
 
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -26,6 +27,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
@@ -78,13 +80,19 @@ fun LoginScreen(navController: NavController, vm: LoginViewModel = koinViewModel
                 .fillMaxSize()
                 .background(white)
         ) {
+            Image(
+                painter = painterResource(id = R.drawable.bg),
+                contentDescription = null,
+                modifier = Modifier
+                    .fillMaxSize(),
+                contentScale = ContentScale.FillBounds
+            )
             Column(
                 modifier = Modifier
                     .fillMaxSize()
                     .padding(horizontal = 20.dp),
                 verticalArrangement = Arrangement.Top
             ) {
-                Spacer(modifier = Modifier.padding(top = 50.dp))
                 Icon(
                     painter = painterResource(id = R.drawable.ic_logo), contentDescription = null,
                     tint = primary,
@@ -93,7 +101,7 @@ fun LoginScreen(navController: NavController, vm: LoginViewModel = koinViewModel
                         .fillMaxWidth()
                         .align(Alignment.CenterHorizontally)
                 )
-                Spacer(modifier = Modifier.padding(top = 50.dp))
+                Spacer(modifier = Modifier.padding(top = 16.dp))
                 EmailTextField(
                     value = vm.email.value,
                     onValueChange = vm::onEmailChange,
