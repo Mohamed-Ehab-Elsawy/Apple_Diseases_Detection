@@ -24,7 +24,7 @@ fun NameTextField(
         onValueChange = { onValueChange.invoke(it) },
         maxLines = 1,
         label = { Text(text = label) },
-        modifier = Modifier.fillMaxWidth(),
+        modifier = modifier.fillMaxWidth(),
         keyboardOptions = KeyboardOptions(
             keyboardType = KeyboardType.Text, imeAction = ImeAction.Done
         ),

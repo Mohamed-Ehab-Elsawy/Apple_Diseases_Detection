@@ -1,6 +1,6 @@
 package com.example.apple_diseases_detection.presentation.screens.auth.register
 
-import androidx.compose.foundation.background
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
@@ -20,8 +20,10 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalAutofillManager
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
@@ -35,7 +37,6 @@ import com.example.apple_diseases_detection.presentation.components.ui.ProgressD
 import com.example.apple_diseases_detection.presentation.components.ui.theme.errorContainer
 import com.example.apple_diseases_detection.presentation.components.ui.theme.onErrorContainer
 import com.example.apple_diseases_detection.presentation.components.ui.theme.primary
-import com.example.apple_diseases_detection.presentation.components.ui.theme.white
 import com.example.apple_diseases_detection.presentation.screens.auth.register.component.NameTextField
 import com.example.apple_diseases_detection.presentation.screens.auth.register.component.PhoneTextField
 import com.example.apple_diseases_detection.utils.UiState
@@ -77,12 +78,17 @@ fun RegisterScreen(
             modifier = Modifier
                 .padding(paddingValues)
                 .fillMaxSize()
-                .background(white)
         ) {
+            Image(
+                painter = painterResource(id = R.drawable.bg),
+                contentDescription = null,
+                modifier = Modifier.fillMaxSize(),
+                contentScale = ContentScale.FillBounds
+            )
             LazyColumn(
                 modifier = Modifier
                     .fillMaxSize()
-                    .padding(top = 40.dp, start = 20.dp, end = 20.dp),
+                    .padding(start = 20.dp, end = 20.dp),
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
                 item {

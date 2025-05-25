@@ -25,6 +25,7 @@ import androidx.navigation.NavController
 import com.example.apple_diseases_detection.R
 import com.example.apple_diseases_detection.navigation.MainScreens
 import com.example.apple_diseases_detection.presentation.components.ui.theme.white
+import com.example.apple_diseases_detection.utils.UserProvider
 import kotlinx.coroutines.delay
 
 @Composable
@@ -60,12 +61,23 @@ fun SplashScreen(navController: NavController) {
     LaunchedEffect(Unit) {
         isVisible = true
         delay(1800)
-
         startFadeOut = true
         delay(400)
 
-        navController.navigate(MainScreens.Login.route)
+        if (UserProvider.it.id == null)
+            navController.navigate(MainScreens.Login.route) {
+                popUpTo(MainScreens.Splash.route) {
+                    inclusive = true
+                }
+            }
+        else
+            navController.navigate(MainScreens.Home.route) {
+                popUpTo(MainScreens.Splash.route) {
+                    inclusive = true
+                }
+            }
     }
+
     Scaffold { paddingValues ->
         Box(
             modifier = Modifier
@@ -87,4 +99,5 @@ fun SplashScreen(navController: NavController) {
             )
         }
     }
+
 }

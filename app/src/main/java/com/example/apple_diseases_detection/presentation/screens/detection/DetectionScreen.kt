@@ -1,55 +1,64 @@
 package com.example.apple_diseases_detection.presentation.screens.detection
 
-import android.app.Activity
+import androidx.compose.foundation.Image
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Scaffold
-import androidx.compose.material3.Snackbar
-import androidx.compose.material3.SnackbarHost
-import androidx.compose.material3.SnackbarHostState
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.example.apple_diseases_detection.R
+import com.example.apple_diseases_detection.navigation.MainScreens
 import com.example.apple_diseases_detection.presentation.components.ui.AppTopBar
-import com.example.apple_diseases_detection.presentation.components.ui.theme.errorContainer
-import com.example.apple_diseases_detection.presentation.components.ui.theme.onErrorContainer
+import com.example.apple_diseases_detection.presentation.components.ui.CustomButton
 
 @Composable
 fun DetectionScreen(navController: NavController) {
-    val context = LocalContext.current
-    context as? Activity
-
-    val snackBarHostState = remember { SnackbarHostState() }
-    rememberCoroutineScope()
 
     Scaffold(
         topBar = {
             AppTopBar(
-                title = stringResource(R.string.detection)
+                title = stringResource(R.string.profile)
             )
-        },
-        snackbarHost = {
-            SnackbarHost(hostState = snackBarHostState) { data ->
-                Snackbar(
-                    snackbarData = data,
-                    containerColor = errorContainer,
-                    contentColor = onErrorContainer
-                )
-            }
         }
     ) { paddingValues ->
         Box(
             modifier = Modifier
                 .padding(paddingValues)
                 .fillMaxSize()
-        ){
-
+        ) {
+            Image(
+                painter = painterResource(id = R.drawable.bg),
+                contentDescription = null,
+                modifier = Modifier
+                    .fillMaxSize(),
+                contentScale = ContentScale.FillBounds
+            )
+            Column(
+                modifier = Modifier.padding(horizontal = 20.dp),
+                verticalArrangement = Arrangement.Top,
+                horizontalAlignment = Alignment.CenterHorizontally
+            ) {
+                CustomButton(
+                    text = "Go to home",
+                    onClick = {
+                        navController.navigate(MainScreens.Home.route) {
+                            popUpTo(MainScreens.Home.route) {
+                                inclusive = true
+                            }
+                        }
+                    }
+                )
+            }
         }
     }
+
 }

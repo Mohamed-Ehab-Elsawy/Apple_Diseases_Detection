@@ -122,7 +122,7 @@ fun LoginScreen(navController: NavController, vm: LoginViewModel = koinViewModel
                     fontSize = 16.sp,
                     modifier = Modifier
                         .clickable {
-                            //navController.navigate(MainScreens.ForgetPassword.route)
+                            navController.navigate(MainScreens.ForgetPassword.route)
                         }
                         .align(Alignment.Start)
                 )

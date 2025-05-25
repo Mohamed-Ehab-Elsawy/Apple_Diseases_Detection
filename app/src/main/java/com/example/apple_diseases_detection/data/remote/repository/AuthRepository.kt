@@ -4,6 +4,7 @@ import android.util.Log
 import com.example.apple_diseases_detection.data.local.PreferencesHelper
 import com.example.apple_diseases_detection.data.models.User
 import com.example.apple_diseases_detection.data.models.requests.AuthRequest
+import com.example.apple_diseases_detection.utils.UserProvider
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.firestore.FirebaseFirestore
@@ -27,6 +28,7 @@ class AuthRepository(
             val user = snapshot.toObject(User::class.java)
             if (user != null) {
                 preferencesHelper.putUser(user)
+                UserProvider.it = user
                 Log.d("AuthRepository", "User Logged in successfully")
             }
             return Result.success(result.user)
@@ -47,6 +49,7 @@ class AuthRepository(
                 usersCollection.document(authRequest.user!!.id ?: "").set(authRequest.user!!)
                     .await()
                 preferencesHelper.putUser(authRequest.user!!)
+                UserProvider.it = authRequest.user!!
                 Log.e("AuthRepository", "User data saved successfully")
                 Result.success(result.user)
             } else
@@ -61,6 +64,11 @@ class AuthRepository(
         } catch (t: Throwable) {
             Log.e("FirebaseServicesImpl", "forgetPassword: ${t.localizedMessage}")
         }
+    }
+
+    fun logout() {
+        preferencesHelper.clearData()
+        firebaseAuth.signOut()
     }
 
 }
