@@ -1,4 +1,4 @@
-package com.example.apple_diseases_detection.presentation.screens.camera.component
+package com.example.apple_diseases_detection.presentation.screens.detection.camera.component
 
 import android.Manifest
 import android.util.Log

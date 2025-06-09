@@ -38,7 +38,7 @@ fun AppTopBar(
     ) {
         Box(
             modifier = Modifier
-                .padding(vertical = 36.dp)
+                .padding(vertical = 16.dp)
                 .fillMaxWidth()
                 .background(transparent)
         ) {

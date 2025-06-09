@@ -68,7 +68,11 @@ dependencies {
     implementation(libs.androidx.ui.text.google.fonts)
     implementation(libs.firebase.auth)
     implementation(libs.firebase.firestore)
-    implementation("com.google.guava:guava:32.1.3-android")
+    implementation(libs.guava)
+
+    implementation(platform(libs.firebase.bom))
+    implementation(libs.google.firebase.ai)
+
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)

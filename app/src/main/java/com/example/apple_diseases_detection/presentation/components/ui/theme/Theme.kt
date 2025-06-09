@@ -1,11 +1,15 @@
 package com.example.apple_diseases_detection.presentation.components.ui.theme
 
 import android.os.Build
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.systemBarsPadding
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.dynamicLightColorScheme
 import androidx.compose.material3.lightColorScheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
 
@@ -58,13 +62,28 @@ fun AppleDiseasesDetectionTheme(
     } else appScheme
 
     val systemUiController = rememberSystemUiController()
-    LaunchedEffect(colorScheme) {
-        systemUiController.setSystemBarsColor(color = primary)
-    }
 
+    LaunchedEffect(colorScheme) {
+        systemUiController.setStatusBarColor(
+            color = primary,
+            darkIcons = false // set true/false based on contrast
+        )
+        systemUiController.setNavigationBarColor(
+            color = primary,
+            darkIcons = false
+        )
+    }
     MaterialTheme(
         colorScheme = colorScheme,
         typography = AppTypography,
-        content = content
+        content = {
+            Box(
+                modifier = Modifier
+                    .fillMaxSize()
+                    .systemBarsPadding()
+            ) {
+                content()
+            }
+        }
     )
 }

@@ -1,8 +1,9 @@
-package com.example.apple_diseases_detection.presentation.screens.camera
+package com.example.apple_diseases_detection.presentation.screens.detection.camera
 
 import android.app.Activity
 import android.content.Context
 import android.content.Intent
+import android.graphics.BitmapFactory
 import android.net.Uri
 import android.provider.MediaStore
 import android.provider.OpenableColumns
@@ -28,13 +29,17 @@ import androidx.core.content.ContextCompat
 import androidx.navigation.NavController
 import com.example.apple_diseases_detection.navigation.MainScreens
 import com.example.apple_diseases_detection.presentation.components.ui.theme.black
-import com.example.apple_diseases_detection.presentation.screens.camera.component.CameraView
-import com.example.apple_diseases_detection.presentation.screens.camera.component.GalleryButton
-import com.example.apple_diseases_detection.presentation.screens.camera.component.ShutterButton
+import com.example.apple_diseases_detection.presentation.screens.detection.DetectionViewModel
+import com.example.apple_diseases_detection.presentation.screens.detection.camera.component.CameraView
+import com.example.apple_diseases_detection.presentation.screens.detection.camera.component.GalleryButton
+import com.example.apple_diseases_detection.presentation.screens.detection.camera.component.ShutterButton
 import java.io.File
 
 @Composable
-fun CameraScreen(navController: NavController) {
+fun CameraScreen(
+    navController: NavController,
+    vm: DetectionViewModel,
+) {
     val context = LocalContext.current
 
     var imageCapture: ImageCapture? by remember { mutableStateOf(null) }
@@ -43,10 +48,13 @@ fun CameraScreen(navController: NavController) {
         rememberLauncherForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
             if (result.resultCode == Activity.RESULT_OK) {
                 result.data?.data?.let { uri ->
-                    getFileFromUri(context, uri)
-                    //vm.uploadImage(photoFile)
-                    navController.apply {
-                        navigate(MainScreens.Detection.route)
+                    val filePath = getFileFromUri(context, uri).absolutePath
+                    val bitmap = BitmapFactory.decodeFile(filePath)
+                    vm.analyzeImageWithGemini(bitmap)
+                    navController.navigate(MainScreens.Results.route) {
+                        popUpTo(MainScreens.Camera.route) {
+                            inclusive = true
+                        }
                     }
                 }
             }
@@ -66,22 +74,23 @@ fun CameraScreen(navController: NavController) {
                 .align(Alignment.BottomCenter)
                 .padding(16.dp)
         ) {
-            ShutterButton(
-                modifier = Modifier.align(Alignment.Center), onClick = {
+            ShutterButton(modifier = Modifier.align(Alignment.Center), onClick = {
                     onImageTaken(
                         capture = imageCapture, context = context, onSuccess = { photoFile ->
-                            //vm.uploadXray(photoFile)
-                            navController.apply {
-                                navigate(MainScreens.Detection.route)
+                            val bitmap = BitmapFactory.decodeFile(photoFile.absolutePath)
+                            vm.analyzeImageWithGemini(bitmap)
+                            navController.navigate(MainScreens.Results.route) {
+                                popUpTo(MainScreens.Camera.route) {
+                                    inclusive = true
+                                }
                             }
-                        })
+                        }
+                    )
                 })
             GalleryButton(modifier = Modifier.align(Alignment.CenterStart)) {
-                val intent =
-                    Intent(
-                        Intent.ACTION_PICK,
-                        MediaStore.Images.Media.EXTERNAL_CONTENT_URI
-                    )
+                val intent = Intent(
+                    Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI
+                )
                 imagePickerLauncher.launch(intent)
             }
         }
